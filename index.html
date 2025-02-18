@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDJ AI Chat Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen">
+    <!-- Auth Container -->
+    <div id="authContainer" class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-96 text-center space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">KDJ AI Chat</h2>
+            
+            <!-- Auth Form -->
+            <div id="authForm" class="space-y-4">
+                <div class="space-y-2">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Enter email" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        required
+                    >
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter password" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        required
+                        minlength="6"
+                    >
+                </div>
+
+                <div class="space-y-2">
+                    <button onclick="handleSignIn()" id="signInBtn" class="auth-button bg-green-500 hover:bg-green-600">
+                        Sign In
+                    </button>
+                    <button onclick="handleSignUp()" id="signUpBtn" class="auth-button bg-blue-500 hover:bg-blue-600">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+
+            <!-- Message Display -->
+            <div id="messageContainer" class="hidden mt-4">
+                <p id="message" class="text-sm font-medium p-3 rounded-lg"></p>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading" class="hidden">
+                <div class="spinner mx-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div id="chatContainer" class="hidden min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-md p-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-bold text-gray-800">KDJ AI Chat Assistant</h1>
+                    <span id="currentDateTime" class="text-sm text-gray-600"></span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="userEmail" class="text-sm text-gray-600"></span>
+                    <button onclick="handleSignOut()" id="signOutBtn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="flex-1 max-w-7xl mx-auto w-full p-4 flex flex-col">
+            <div id="chatMessages" class="flex-1 overflow-y-auto mb-4 space-y-4 min-h-[calc(100vh-280px)] p-4">
+                <!-- Messages will be inserted here -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="bg-white rounded-lg shadow-lg p-4">
+                <div class="flex gap-4">
+                    <textarea 
+                        id="messageInput" 
+                        class="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                        placeholder="Type your message here..."
+                        rows="3"
+                    ></textarea>
+                    <button 
+                        onclick="sendMessage()" 
+                        id="sendButton"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition self-end flex items-center gap-2"
+                    >
+                        <span>Send</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
