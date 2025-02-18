@@ -16,4 +16,3 @@ const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const db = firebase.firestore();
